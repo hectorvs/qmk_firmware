@@ -251,7 +251,7 @@ A creative coder.
 | Tiger87         | 0xAA96    | 0xAA29 (0xAAEB)          | Hotswap, F103                    | &quest;           |
 | nova65          | 0xAA96    | 0xAA2A                   | WB-3M,65%                        | &quest;           |
 | hs68ec          | 0xAA96    | 0xAA2B                   | G431, EC                         | &quest;           |
-| hk8710          | ????      | 0xAA2F                   | WB-3M,80%,TouchPad               | &quest;           |
+| hk8710          | ????      | 0xAA2C                   | WB-3M,80%,TouchPad               | &quest;           |
 | x100mkll        | 0xAA96    | 0xAA2F                   | WB-3M,98%                        | &quest;           |
 | ROSE75          | 0xAA96    | 0xAA2D                   | RP2040, TFT                      | &quest;           |
 | PTG64A          | 0xAA96    | 0xAA2E                   | WB-3M,60%                        | &check;           |
