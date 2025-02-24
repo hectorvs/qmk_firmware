@@ -237,8 +237,8 @@ A creative coder.
 | LK75            | 0xAA96    | 0xAA3C                   | WB-3M,75%                        | &quest;           |
 | PTG6095         | 0xAA96    | 0xAA3D(shadow of 0xAA0C) | WB-3M,60%                        | &quest;           |
 | RoseAlice       | 0xAA96    | 0xAA3E                   | WB-3M,Alcie                      | &check;           |
-| NK785           | 0xAA96    | 0xAA3F                   | WB-3M,75%                        | &check;           |
-| NOVA75          | 0xAA96    | 0xAA20                   | WB-3M,75%                        | &quest;           |
+| NK785           | 0x414B    | 0x6390                   | WB-3M,75%                        | &check;           |
+| NOVA75          | 0xAA96    | 0xAA20                   | WB-3M,75%                        | &check;           |
 | Star75          | 0xAA96    | 0xAA21                   | WB-3M,75%                        | &check;           |
 | LK60            | 0xAA96    | 0xAA22                   | WB-3M,60%                        | &quest;           |
 | ICE80           | 0xAA96    | 0xAA23                   | WB-3M,80%                        | &quest;           |
@@ -249,9 +249,12 @@ A creative coder.
 | Yu75Pro         | 0xAA96    | 0xAA27                   | WB-3M,70%                        | &check;           |
 | Whale75         | 0xAA96    | 0xAA28                   | WB-3M,70%                        | &check;           |
 | Tiger87         | 0xAA96    | 0xAA29 (0xAAEB)          | Hotswap, F103                    | &quest;           |
-| nova65          | 0xAA96    | 0xAA2A                   | WB-3M,70%                        | &quest;           |
+| nova65          | 0xAA96    | 0xAA2A                   | WB-3M,65%                        | &quest;           |
 | hs68ec          | 0xAA96    | 0xAA2B                   | G431, EC                         | &quest;           |
-| hk8710          | 0xAA96    | 0xAA2C                   | WB-3M,80%,TouchPad               | &quest;           |
+| hk8710          | ????      | 0xAA2F                   | WB-3M,80%,TouchPad               | &quest;           |
+| x100mkll        | 0xAA96    | 0xAA2F                   | WB-3M,98%                        | &quest;           |
+| ROSE75          | 0xAA96    | 0xAA2D                   | RP2040, TFT                      | &quest;           |
+| PTG64A          | 0xAA96    | 0xAA2E                   | WB-3M,60%                        | &check;           |
 
 
 
