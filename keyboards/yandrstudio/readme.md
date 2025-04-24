@@ -242,19 +242,20 @@ A creative coder.
 | Star75          | 0xAA96    | 0xAA21                   | WB-3M,75%                        | &check;           |
 | LK60            | 0xAA96    | 0xAA22                   | WB-3M,60%                        | &quest;           |
 | ICE80           | 0xAA96    | 0xAA23                   | WB-3M,80%                        | &quest;           |
-| sam40v2         | 0xAA96    | 0xAA24                   | NRF-2M,40%                       | &quest;           |
+| sam40v2         | 0xAA96    | 0xAA24                   | NRF-2M,40%                       | &check;           |
 | MEK70           | 0xAA96    | 0xAA5E                   | WB-3M,70%                        | &check;           |
 | SOUL65          | 0xAA96    | 0xAA25                   | Hotswap, F103                    | &quest;           |
-| RS Pad          | 0xAA96    | 0xAA26                   | Hotswap, 51B                     | &quest;           |
+| RS Pad          | 0xAA96    | 0xAA26                   | Hotswap, 51B                     | &check;           |
 | Yu75Pro         | 0xAA96    | 0xAA27                   | WB-3M,70%                        | &check;           |
 | Whale75         | 0xAA96    | 0xAA28                   | WB-3M,70%                        | &check;           |
 | Tiger87         | 0xAA96    | 0xAA29 (0xAAEB)          | Hotswap, F103                    | &quest;           |
 | nova65          | 0xAA96    | 0xAA2A                   | WB-3M,65%                        | &quest;           |
 | hs68ec          | 0xAA96    | 0xAA2B                   | G431, EC                         | &quest;           |
 | hk8710          | ????      | 0xAA2C                   | WB-3M,80%,TouchPad               | &quest;           |
-| x100mkll        | 0xAA96    | 0xAA2F                   | WB-3M,98%                        | &quest;           |
 | ROSE75          | 0xAA96    | 0xAA2D                   | RP2040, TFT                      | &quest;           |
 | PTG64A          | 0xAA96    | 0xAA2E                   | WB-3M,60%                        | &check;           |
+| x100mkll        | 0xAA96    | 0xAA2F                   | WB-3M,98%                        | &quest;           |
+| TIGA            | 0xAA96    | 0xAB00                   | Hotswap,65%,F103                 | &check;           |
 
 
 
