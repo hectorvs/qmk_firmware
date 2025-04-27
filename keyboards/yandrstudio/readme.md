@@ -256,6 +256,7 @@ A creative coder.
 | PTG64A          | 0xAA96    | 0xAA2E                   | WB-3M,60%                        | &check;           |
 | x100mkll        | 0xAA96    | 0xAA2F                   | WB-3M,98%                        | &quest;           |
 | TIGA            | 0xAA96    | 0xAB00                   | Hotswap,65%,F103                 | &check;           |
+| EC65            | 0xAA96    | 0xAB01                   | F405, EC                         | &quest;           |
 
 
 
