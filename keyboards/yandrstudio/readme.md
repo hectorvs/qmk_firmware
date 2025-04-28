@@ -29,14 +29,14 @@ A creative coder.
 | ps64ble       | 0xAA96    | 0xAA0E     | BLE 5.0 Dual mode,RGB                 | &check;           |
 | sp65pm        | 0xAA96    | 0xAA0F     | 2.4G Single mode Split Keyboard       | &cross;           |
 | yr80pro       | 0xAA96    | 0xAA10     | 8k report rate                        | &check;           |
-| yr67mag_v1    | 0xAA96    | 0xAA11     | magnetic                              | &check;           |
-| yr80ble       | 0xAA96    | 0xAA12     | BLE 5.0 Dual mode                     | &check;           |
+| yr67mag_v1    | 0xAA96    | 0xAA11     | magnetic                              | &cross;           |
+| yr80ble       | 0xAA96    | 0xAA12     | BLE 5.0 Dual mode                     | &quest;           |
 | F6501         | 0xAA96    | 0xAA13     | BLE 5.0 Dual mode                     | &check;           |
-| R-Star64 HE   | 0xAA96    | 0xAB01     | magnetic                              | &check;           |
-| A75           | 0xAA96    | 0xAB02     |                                       | &check;           |
+| R-Star64 HE   | 0xAA96    | 0xAB01     | magnetic                              | &cross;           |
+| ATK75         | 0xAA96    | 0xAB02     | magnetic                              | &cross;           |
 | L Test-415    | 0xAA96    | 0xBB00     |                                       | &check;           |
-| L Test-405    | 0xAA96    | 0xBB01     |                                       | &check;           |
-| yr6095tm      | 0xAA96    | 0xAA14     |                                       | &check;           |
+| L Test-405    | 0xAA96    | 0xBB01     |                                       | &cross;           |
+| yr6095tm      | 0xAA96    | 0xAA14     |                                       | &cross;           |
 
 
 
@@ -256,7 +256,7 @@ A creative coder.
 | PTG64A          | 0xAA96    | 0xAA2E                   | WB-3M,60%                        | &check;           |
 | x100mkll        | 0xAA96    | 0xAA2F                   | WB-3M,98%                        | &quest;           |
 | TIGA            | 0xAA96    | 0xAB00                   | Hotswap,65%,F103                 | &check;           |
-| EC65            | 0xAA96    | 0xAB01                   | F405, EC                         | &quest;           |
+| EC65            | 0xAA96    | 0xAB03                   | F405, EC                         | &quest;           |
 
 
 
