@@ -32,7 +32,7 @@ A creative coder.
 | yr67mag_v1    | 0xAA96    | 0xAA11     | magnetic                              | &check;           |
 | yr80ble       | 0xAA96    | 0xAA12     | BLE 5.0 Dual mode                     | &check;           |
 | F6501         | 0xAA96    | 0xAA13     | BLE 5.0 Dual mode                     | &check;           |
-| R-Star64 HE   | 0xAA96    | 0xAB01     | magnetic                              | &check;           |
+| R-Star64 HE   | 0xAA96    | 0xAB03     | magnetic                              | &check;           |
 | A75           | 0xAA96    | 0xAB02     |                                       | &check;           |
 | L Test-415    | 0xAA96    | 0xBB00     |                                       | &check;           |
 | L Test-405    | 0xAA96    | 0xBB01     |                                       | &check;           |
@@ -257,6 +257,7 @@ A creative coder.
 | x100mkll        | 0xAA96    | 0xAA2F                   | WB-3M,98%                        | &quest;           |
 | TIGA            | 0xAA96    | 0xAB00                   | Hotswap,65%,F103                 | &check;           |
 | EC65            | 0xAA96    | 0xAB01                   | F405, EC                         | &quest;           |
+| X64             | 0xAA96    | 0xAB04                   | Hotswap, MH103                   | &check;           |
 
 
 
