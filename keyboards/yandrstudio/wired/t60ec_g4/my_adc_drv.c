@@ -6,7 +6,7 @@
 #include "util.h"
 #include "sumqueue_kalman.h"
 
-adcsample_t sampleBuffer[4];
+adcsample_t sampleBuffer[8];
 
 RingBuffer adc_bufs[MATRIX_ROWS][MATRIX_COLS];
 

@@ -100,7 +100,7 @@ static bool ecsm_update_key(matrix_row_t* current_row, uint8_t row, uint8_t col)
     bool change = false;
 
     // press to release
-    if (current_state && diff_idx < 800) {
+    if (current_state && diff_idx < 600) {
         *current_row &= ~(1 << col);
         change = true;
     }
@@ -108,13 +108,13 @@ static bool ecsm_update_key(matrix_row_t* current_row, uint8_t row, uint8_t col)
     // 中间带不管
 
     // release to press
-    if ((!current_state) && diff_idx > 1600) {
+    if ((!current_state) && diff_idx > 1024) {
         *current_row |= (1 << col);
         change = true;
     }
 
     if (change) {
-        printf("%d,%d: %d\n", row, col, diff_idx);
+        printf("%d,%d: %ld\n", row, col, diff_idx);
     }
 
     return change;
@@ -239,9 +239,9 @@ uint8_t matrix_scan_custom(matrix_row_t current_matrix[]) {
     }
     if (timer_elapsed32(scan_timer) >= 500) {
         scan_timer  = timer_read32();
-// #ifdef CONSOLE_ENABLE
-//         ecsm_print_matrix();
-// #endif
+#ifdef CONSOLE_ENABLE
+        ecsm_print_matrix();
+#endif
     }
 
     bool updated = ecsm_matrix_scan(current_matrix);
