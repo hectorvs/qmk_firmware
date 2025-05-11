@@ -1,4 +1,4 @@
-/* Copyright 2021 JasonRen(biu)
+/* Copyright 2024 JasonRen(biu)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,52 +24,22 @@
 #include "print.h"
 #include "my_adc_drv.h"
 
-#define WAIT_DISCHARGE()
-#define WAIT_CHARGE()
+struct ec_key_t {
+    uint16_t adc_min;
+    uint16_t adc_max;
+    uint16_t adc_diff;
+    uint16_t diff_idx;
+    uint16_t adc_value;
+    uint16_t lv_value;
+} ec_keys[MATRIX_ROWS][MATRIX_COLS];
+
 
 // pin connections
 const uint32_t row_pins[]     = MATRIX_ROW_PINS;
 const uint8_t  col_channels[] = MATRIX_COL_CHANNELS;
 const uint32_t mux_sel_pins[] = MUX_SEL_PINS;
 
-static bool auto_fine_f = false;
-
 static bool matrix_no_point[MATRIX_ROWS][MATRIX_COLS] = MS_MX_MASK;
-
-static uint16_t ecsm_sw_init_top_value[MATRIX_ROWS][MATRIX_COLS] = {
-    {400, 350, 350, 550, 400, 400, 700, 350, 450, 400, 750, 550, 700, 550},
-    {400, 400, 350, 450, 450, 350, 250, 550, 550, 250, 350, 550, 400, 550},
-    {350, 700, 400, 500, 450, 350, 450, 450, 350, 450, 350, 500, 0,   800},
-    {400, 0,   500, 500, 500, 450, 350, 350, 300, 400, 500, 350, 400, 400},
-    {0,   1900,1600,0,   0,   0,   1800,0,   0,   1600,1900,1800,0,   0}
-};
-
-
-static uint16_t ecsm_sw_top_value[MATRIX_ROWS][MATRIX_COLS] = {
-    {400, 350, 350, 550, 400, 400, 700, 350, 450, 400, 750, 550, 700, 550},
-    {400, 400, 350, 450, 450, 350, 250, 550, 550, 250, 350, 550, 400, 550},
-    {350, 700, 400, 500, 450, 350, 450, 450, 350, 450, 350, 500, 0,   800},
-    {400, 0,   500, 500, 500, 450, 350, 350, 300, 400, 500, 350, 400, 400},
-    {0,   1900,1600,0,   0,   0,   1800,0,   0,   1600,1900,1800,0,   0}
-};
-
-static uint16_t ecsm_sw_init_bottom_value[MATRIX_ROWS][MATRIX_COLS] = {
-    {2100, 1800, 2300, 2100, 2000, 2500, 2400, 2500, 2600, 2600, 2600, 2600},
-    {2100, 2200, 2000, 2200, 2500, 2200, 2100, 2500, 2400, 1500, 2500, 2400, 2500, 2800},
-    {1700, 2300, 2300, 2200, 2200, 1500, 2300, 2400, 2300, 2900, 2000, 2000, 0,   2700},
-    {2400, 0,   2400, 2500, 2600, 2300, 2200, 2300, 2200, 2000, 2000, 2400, 2200, 2400},
-    {0,   3800,3200,0,   0,   0,   3800,0,   0,   3600,3600,4000,0,   0}
-};
-
-static uint16_t ecsm_sw_bottom_value[MATRIX_ROWS][MATRIX_COLS] = {
-    {2100, 1800, 2300, 2100, 2000, 2500, 2400, 2500, 2600, 2600, 2600, 2600},
-    {2100, 2200, 2000, 2200, 2500, 2200, 2100, 2500, 2400, 1500, 2500, 2400, 2500, 2800},
-    {1700, 2300, 2300, 2200, 2200, 1500, 2300, 2400, 2300, 2900, 2000, 2000, 0,   2700},
-    {2400, 0,   2400, 2500, 2600, 2300, 2200, 2300, 2200, 2000, 2000, 2400, 2200, 2400},
-    {0,   3800,3200,0,   0,   0,   3800,0,   0,   3600,3600,4000,0,   0}
-};
-
-static uint16_t ecsm_sw_value[MATRIX_ROWS][MATRIX_COLS];
 
 static inline void discharge_capacitor(void) {
     setPinOutput(DISCHARGE_PIN);
@@ -82,9 +52,7 @@ static inline void charge_capacitor(uint8_t row) {
 }
 
 static inline void clear_row_pin(uint8_t row) {
-    // for (int row = 0; row < MATRIX_ROWS; row++) {
-        writePinLow(row_pins[row]);
-    // }
+    writePinLow(row_pins[row]);
 }
 
 static inline void select_mux(uint8_t col) {
@@ -97,54 +65,59 @@ static inline void select_mux(uint8_t col) {
 static uint16_t ecsm_readkey_raw(uint8_t row, uint8_t col) {
     uint16_t sw_value = 0;
 
-    charge_capacitor(row);
-
-    sw_value = analogReadPin_my(ADC_READ_PIN);
+    charge_capacitor(row); // 拉高这一行, 给这一行的电容充电
+    // 理论上这里要等下等待充电完成
+    analogStart_my(); // 开启ADC转换
+    sw_value = analogReadPin_my(row, col); // 获取ADC的读数
 
     discharge_capacitor();
     clear_row_pin(row);
-    wait_us(15); // 5*1nf*1k = 5us
+    wait_us(5); // 5*1nf*1k = 5us
     return sw_value;
 }
 
 // Update press/release state of key at (row, col)
-static bool ecsm_update_key(matrix_row_t* current_row, uint8_t row, uint8_t col, uint16_t sw_value) {
+static bool ecsm_update_key(matrix_row_t* current_row, uint8_t row, uint8_t col) {
     bool current_state = (*current_row >> col) & 1;
 
+
+    uint32_t diff_idx = 0;
+    uint32_t scal_10 = 2048;
+
+    if (ec_keys[row][col].adc_max > ec_keys[row][col].adc_min + 1000) {
+        scal_10 = (2048<<11) / (ec_keys[row][col].adc_max - ec_keys[row][col].adc_min); // avoid float
+    } else {
+        scal_10 = 2048;
+    }
+
+    diff_idx = (scal_10 * (ec_keys[row][col].adc_value - ec_keys[row][col].adc_min))>>11;
+
+    if (diff_idx > 2049 - 1) {
+        diff_idx = 2048;
+    }
+    ec_keys[row][col].diff_idx = diff_idx;
+
+    bool change = false;
+
     // press to release
-
-    uint16_t up_th = 500;
-    uint16_t down_th = 1000;
-
-    if (ecsm_sw_bottom_value[row][col] > ecsm_sw_top_value[row][col] + 1200) {
-        up_th = (ecsm_sw_bottom_value[row][col] - ecsm_sw_top_value[row][col]) / 3;
-        down_th = up_th*2;
-    }
-
-    if (current_state && sw_value < ecsm_sw_top_value[row][col]+up_th) {
+    if (current_state && diff_idx < 800) {
         *current_row &= ~(1 << col);
-        return true;
+        change = true;
     }
+
+    // 中间带不管
 
     // release to press
-    if ((!current_state) && sw_value > ecsm_sw_top_value[row][col]+down_th) {
+    if ((!current_state) && diff_idx > 1600) {
         *current_row |= (1 << col);
-        return true;
+        change = true;
     }
 
-    return false;
-}
+    if (change) {
+        printf("%d,%d: %d\n", row, col, diff_idx);
+    }
 
-void auto_fine_sw_th(uint8_t row, uint8_t col) {
-    // 是否是顶部值范围
-    if (ecsm_sw_value[row][col] < ecsm_sw_init_top_value[row][col]+500 && ecsm_sw_value[row][col] + 500 > ecsm_sw_init_top_value[row][col]) {
-        ecsm_sw_top_value[row][col] = MIN(ecsm_sw_top_value[row][col], ecsm_sw_value[row][col]);
-        return;
-    }
-    if (ecsm_sw_value[row][col] < ecsm_sw_init_bottom_value[row][col]+500 && ecsm_sw_value[row][col] + 500 > ecsm_sw_init_bottom_value[row][col]) {
-        ecsm_sw_bottom_value[row][col] = MAX(ecsm_sw_bottom_value[row][col], ecsm_sw_value[row][col]);
-        return;
-    }
+    return change;
 }
 
 // Scan key values and update matrix state
@@ -152,7 +125,7 @@ bool ecsm_matrix_scan(matrix_row_t current_matrix[]) {
     bool updated = false;
 
     discharge_capacitor();
-    wait_us(100);
+    wait_us(16);
     for (int col = 0; col < MATRIX_COLS; col++) {
         select_mux(col);
 
@@ -164,11 +137,11 @@ bool ecsm_matrix_scan(matrix_row_t current_matrix[]) {
 
         for (int row = 0; row < MATRIX_ROWS; row++) {
             if (matrix_no_point[row][col] == 0) continue;
-            ecsm_sw_value[row][col] = ecsm_readkey_raw(row, col);
-            if (auto_fine_f) {
-                auto_fine_sw_th(row, col);
-            }
-            updated |= ecsm_update_key(&current_matrix[row], row, col, ecsm_sw_value[row][col]);
+            ec_keys[row][col].adc_value = ecsm_readkey_raw(row, col);
+            ec_keys[row][col].adc_min = MIN(ec_keys[row][col].adc_min,  ec_keys[row][col].adc_value);
+            ec_keys[row][col].adc_max = MAX(ec_keys[row][col].adc_max,  ec_keys[row][col].adc_value);
+            ec_keys[row][col].adc_diff = ec_keys[row][col].adc_max - ec_keys[row][col].adc_min;
+            updated |= ecsm_update_key(&current_matrix[row], row, col);
         }
         writePinHigh(APLEX_EN_PIN_1);
         writePinHigh(APLEX_EN_PIN_0);
@@ -176,58 +149,14 @@ bool ecsm_matrix_scan(matrix_row_t current_matrix[]) {
     return updated;
 }
 
-void set_ec_top_init_val(void) {
-    discharge_capacitor();
-    wait_us(200);
-    for (int col = 0; col < MATRIX_COLS; col++) {
-        select_mux(col);
-
-        if (col < 7) {
-            writePinLow(APLEX_EN_PIN_0);
-        } else {
-            writePinLow(APLEX_EN_PIN_1);
-        }
-
-        for (int row = 0; row < MATRIX_ROWS; row++) {
-            if (matrix_no_point[row][col] == 0) continue;
-            ecsm_sw_value[row][col] = ecsm_readkey_raw(row, col);
-            auto_fine_sw_th(row, col);
-        }
-        writePinHigh(APLEX_EN_PIN_1);
-        writePinHigh(APLEX_EN_PIN_0);
-    }
-}
-
 // Debug print key values
 void ecsm_print_matrix(void) {
+    print("ADC VAL\n");
     for (int row = 0; row < MATRIX_ROWS; row++) {
         for (int col = 0; col < MATRIX_COLS; col++) {
-            uprintf("%4d", ecsm_sw_value[row][col]);
-            if (col < MATRIX_COLS-1) {
-                print(",");
-            }
-        }
-        print("\n");
-    }
-    print("\n");
-    print("TOP\n");
-
-    for (int row = 0; row < MATRIX_ROWS; row++) {
-        for (int col = 0; col < MATRIX_COLS; col++) {
-            uprintf("%4d", ecsm_sw_top_value[row][col]);
-            if (col < MATRIX_COLS-1) {
-                print(",");
-            }
-        }
-        print("\n");
-    }
-
-    print("BOTTOM\n");
-
-    for (int row = 0; row < MATRIX_ROWS; row++) {
-        for (int col = 0; col < MATRIX_COLS; col++) {
-            uprintf("%4d", ecsm_sw_bottom_value[row][col]);
-            if (col < MATRIX_COLS-1) {
+            uprintf("%4d:%4d", ec_keys[row][col].adc_value, ec_keys[row][col].diff_idx);
+            // uprintf("%4d:%4d:%4d:%4d", ec_keys[row][col].adc_max, ec_keys[row][col].adc_min, ec_keys[row][col].adc_diff, ec_keys[row][col].adc_value);
+            if (col < MATRIX_COLS - 1) {
                 print(",");
             }
         }
@@ -266,29 +195,58 @@ void matrix_init_custom(void) {
     scan_enable = false;
 }
 
+void reinit_ec_mx(void) {
+    for (uint8_t r = 0; r < MATRIX_ROWS; r++) {
+        for (uint8_t c = 0; c < MATRIX_COLS; c++)
+        {
+            ec_keys[r][c].adc_min = 4096;
+            ec_keys[r][c].adc_max = 0;
+            ec_keys[r][c].adc_value = 0;
+            ec_keys[r][c].lv_value = 0;
+        }
+    }
+}
+
+void ecsm_matrix_scan_dummy(void) {
+    discharge_capacitor();
+    wait_us(20); // 把电放完
+    for (int col = 0; col < MATRIX_COLS; col++) {
+        select_mux(col);
+
+        if (col < 7) {
+            writePinLow(APLEX_EN_PIN_0);
+        } else {
+            writePinLow(APLEX_EN_PIN_1);
+        }
+
+        for (int row = 0; row < MATRIX_ROWS; row++) {
+            if (matrix_no_point[row][col] == 0) continue;
+            ecsm_readkey_raw(row, col);
+        }
+        writePinHigh(APLEX_EN_PIN_1);
+        writePinHigh(APLEX_EN_PIN_0);
+    }
+}
+
 uint8_t matrix_scan_custom(matrix_row_t current_matrix[]) {
-    if (!scan_enable) {
-        if (timer_elapsed32(scan_timer) >= 500) {
-            set_ec_top_init_val();
+    if (!scan_enable) { // 500ms后开始扫描
+        ecsm_matrix_scan_dummy();
+        if (timer_elapsed32(scan_timer) >= 1500) {
             scan_enable = true;
+            reinit_ec_mx();
         }
         return false;
     }
     if (timer_elapsed32(scan_timer) >= 500) {
-        scan_timer = timer_read32();
-        auto_fine_f = true;
+        scan_timer  = timer_read32();
+// #ifdef CONSOLE_ENABLE
+//         ecsm_print_matrix();
+// #endif
     }
-    bool updated = ecsm_matrix_scan(current_matrix);
-    auto_fine_f = false;
 
-    // RAW matrix values on console
-#ifdef CONSOLE_ENABLE
-    static int cnt = 0;
-    if (cnt++ == 500) {
-        cnt = 0;
-        ecsm_print_matrix();
+    bool updated = ecsm_matrix_scan(current_matrix);
+    if (updated) {
+        dprintf("MATRIX\n");
     }
-#endif
     return (uint8_t)updated;
-    // return false;
 }
