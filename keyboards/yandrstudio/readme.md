@@ -155,7 +155,7 @@ A creative coder.
 | studiox         | 0xAA96    | 0xAAD5                   | Hotswap                          | &check;           |
 | tc80            | 0xAA96    | 0xAAD6                   | Hotswap                          | &check;           |
 | stella          | 0xAA96    | 0xAAD7                   | Hotswap                          | &check;           |
-| man40           | 0xAA96    | 0xAAD8                   | Hotswap                          | &check;           |
+| man40           | 0xAA96    | 0xAAD8                   | Hotswap                          | &cross;           |
 | parity70        | 0xAA96    | 0xAAD9                   | Hotswap                          | &check;           |
 | fave60s         | 0xAA96    | 0xAADA                   | Solder                           | &check;           |
 | shanhai70       | 0xAA96    | 0xAADB                   | Hotswap                          | &check;           |
@@ -258,7 +258,7 @@ A creative coder.
 | TIGA            | 0xAA96    | 0xAB00                   | Hotswap,65%,F103                 | &check;           |
 | EC65            | 0xAA96    | 0xAB01                   | F405, EC                         | &quest;           |
 | X64             | 0xAA96    | 0xAB04                   | Hotswap, MH103                   | &check;           |
-
+| man40 (Rev2)    | 0xAA96    | 0xAAD8                   | Hotswa, AT415                    | &quest;           |
 
 
 
