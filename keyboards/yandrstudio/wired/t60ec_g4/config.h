@@ -18,7 +18,7 @@
 #define MATRIX_COLS 14
 
 /* EC Keyboard no NEED */
-#define DEBOUNCE 1
+#define DEBOUNCE 0
 
 /*                            c0 c1 c2 c3 c4 c5 c6 | c7 c8 c9 c10 c11 c12 c13*/
 #define MATRIX_COL_CHANNELS { 3, 0, 1, 2, 7, 4, 6,    3, 0, 1, 2, 6,  4,  7 }
@@ -34,6 +34,4 @@
                     {1,1,1,1,1, 1,1,1,1,1, 1,1,0,1},\
                     {1,1,1,1,1, 1,1,1,1,1, 1,1,1,1},\
                     {0,1,1,0,0, 0,1,0,0,1, 1,1,0,0}}
-
-
 

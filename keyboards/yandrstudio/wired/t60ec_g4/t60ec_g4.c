@@ -2,6 +2,15 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "t60ec_g4.h"
+#include "my_adc_drv.h"
+
+void keyboard_pre_init_kb(void) {
+    void matrix_init_custom(void);
+    // 自动校准会在上电后的前几次扫描中完成
+    matrix_init_custom();
+    // 先初始化ADC
+    analogInit_my();
+}
 
 void keyboard_post_init_kb() {
     keyboard_post_init_user();
