@@ -28,7 +28,6 @@
 
 #ifdef RGBLIGHT_ENABLE
 
-#    define WS2812_LED_COUNT 5
 #    define WS2812_DI_PIN B10
 #    define RGBLIGHT_LED_COUNT 5
 

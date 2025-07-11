@@ -33,22 +33,6 @@ bool led_update_kb(led_t led_state) {
     return true;
 }
 
-void setleds_custom(rgb_led_t *ledarray, uint16_t number_of_leds) {
-    if (!yr_factory_test) {
-        if (!host_keyboard_led_state().caps_lock) {
-            ledarray[0].r = 0;
-            ledarray[0].g = 0;
-            ledarray[0].b = 0;
-        }
-    }
-    ws2812_setleds(ledarray, number_of_leds);
-}
-
-const rgblight_driver_t rgblight_driver = {
-    .init    = ws2812_init,
-    .setleds = setleds_custom,
-};
-
 #endif
 
 bool via_command_kb(uint8_t *data, uint8_t length) {
