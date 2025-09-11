@@ -253,17 +253,19 @@ A creative coder.
 | RS Pad          | 0xAA96    | 0xAA26                   | Hotswap, 51B                     | &check;           |
 | Yu75Pro         | 0xAA96    | 0xAA27                   | WB-3M,70%                        | &check;           |
 | Whale75         | 0xAA96    | 0xAA28                   | WB-3M,70%                        | &check;           |
-| Tiger87         | 0xAA96    | 0xAA29 (0xAAEB)          | Hotswap, F103                    | &quest;           |
+| Tiger87         | 0xAA96    | 0xAA29 (0xAAEB)          | Hotswap, F103                    | &cross;           |
 | nova65          | 0xAA96    | 0xAA2A                   | WB-3M,65%                        | &quest;           |
-| hs68ec          | 0xAA96    | 0xAA2B                   | G431, EC                         | &quest;           |
+| hs68ec          | 0xAA96    | 0xAA2B                   | G431, EC                         | &cross;           |
 | hk8710          | ????      | 0xAA2C                   | WB-3M,80%,TouchPad               | &quest;           |
-| ROSE75          | 0xAA96    | 0xAA2D                   | RP2040, TFT                      | &quest;           |
+| ROSE75          | 0xAA96    | 0xAA2D                   | RP2040, TFT                      | &check;           |
 | PTG64A          | 0xAA96    | 0xAA2E                   | WB-3M,60%                        | &check;           |
-| x100mkll        | 0xAA96    | 0xAA2F                   | WB-3M,98%                        | &quest;           |
+| x100mkll        | 0xAA96    | 0xAA2F                   | WB-3M,98%                        | &cross;           |
 | TIGA            | 0xAA96    | 0xAB00                   | Hotswap,65%,F103                 | &check;           |
 | EC65            | 0xAA96    | 0xAB01                   | F405, EC                         | &quest;           |
 | X64             | 0xAA96    | 0xAB04                   | Hotswap, MH103                   | &check;           |
-| man40 (Rev2)    | 0xAA96    | 0xAAD8                   | Hotswa, AT415                    | &quest;           |
+| man40 (Rev2)    | 0xAA96    | 0xAAD8                   | Hotswa, AT415                    | &check;           |
+| T65D            | 0xAA96    | 0xAAD9                   | Hotswa, F103                     | &quest;           |
+
 
 
 
