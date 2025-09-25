@@ -264,7 +264,8 @@ A creative coder.
 | EC65            | 0xAA96    | 0xAB01                   | F405, EC                         | &quest;           |
 | X64             | 0xAA96    | 0xAB04                   | Hotswap, MH103                   | &check;           |
 | man40 (Rev2)    | 0xAA96    | 0xAAD8                   | Hotswa, AT415                    | &check;           |
-| T65D            | 0xAA96    | 0xAAD9                   | Hotswa, F103                     | &quest;           |
+| T65D            | 0xAA96    | 0xAB05                   | Hotswa, F103                     | &quest;           |
+| Rose80R3        | 0xAA96    | 0xAB06                   | Hotswa, F103                     | &quest;           |
 
 
 
