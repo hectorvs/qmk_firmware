@@ -240,7 +240,7 @@ A creative coder.
 | h70             | 0xAA96    | 0xAA3A                   | Hotswap, RP2040, TFT             | &quest;           |
 | sades60         | 0xAA96    | 0xAA3B                   | WB-3M,60%                        | &quest;           |
 | LK75            | 0xAA96    | 0xAA3C                   | WB-3M,75%                        | &quest;           |
-| PTG6095         | 0xAA96    | 0xAA3D(shadow of 0xAA0C) | WB-3M,60%                        | &quest;           |
+| PTG6095B        | 0xAA96    | 0xAA3D(shadow of 0xAA0C) | Solder,60%                       | &quest;           |
 | RoseAlice       | 0xAA96    | 0xAA3E                   | WB-3M,Alcie                      | &check;           |
 | NK785           | 0x414B    | 0x6390                   | WB-3M,75%                        | &check;           |
 | NOVA75          | 0xAA96    | 0xAA20                   | WB-3M,75%                        | &check;           |
@@ -263,10 +263,10 @@ A creative coder.
 | TIGA            | 0xAA96    | 0xAB00                   | Hotswap,65%,F103                 | &check;           |
 | EC65            | 0xAA96    | 0xAB01                   | F405, EC                         | &quest;           |
 | X64             | 0xAA96    | 0xAB04                   | Hotswap, MH103                   | &check;           |
-| man40 (Rev2)    | 0xAA96    | 0xAAD8                   | Hotswa, AT415                    | &check;           |
-| T65D            | 0xAA96    | 0xAB05                   | Hotswa, F103                     | &quest;           |
-| Rose80R3        | 0xAA96    | 0xAB06                   | Hotswa, F103                     | &quest;           |
-
+| man40 (Rev2)    | 0xAA96    | 0xAAD8                   | Hotswap, AT415                   | &check;           |
+| T65D            | 0xAA96    | 0xAB05                   | Hotswap, F103                    | &quest;           |
+| Rose80R3        | 0xAA96    | 0xAB06                   | Hotswap, F103                    | &quest;           |
+| PTG6095C        | 0xAA96    | 0xAB07(shadow of 0xAA0C) | Hotswap, 60%                     | &check;           |
 
 
 
