@@ -26,29 +26,31 @@ static bool PIXEL_FRACTAL(effect_params_t* params) {
     RGB_MATRIX_USE_LIMITS(led_min, led_max);
 
     if (g_rgb_timer > wait_timer) {
-        RGB rgb = rgb_matrix_hsv_to_rgb(rgb_matrix_config.hsv);
+        rgb_t rgb = rgb_matrix_hsv_to_rgb(rgb_matrix_config.hsv);
+        uint8_t rgb_index = 0;
         for (uint8_t h = 0; h < MATRIX_ROWS; ++h) {
-            if (g_led_config.matrix_co[h][MID_COL - 1] == NO_LED || g_led_config.matrix_co[h][MATRIX_COLS - MID_COL] == NO_LED) {
-                continue;
-            }
             // Light and copy columns outward
             for (uint8_t l = 0; l < MID_COL - 1; ++l) {
-                RGB index_rgb = led[h][l] ? (RGB){rgb.r, rgb.g, rgb.b} : (RGB){0, 0, 0};
-                if (HAS_ANY_FLAGS(g_led_config.flags[g_led_config.matrix_co[h][l]], params->flags)) {
+                rgb_index = g_led_config.matrix_co[h][l];
+                rgb_t index_rgb = led[h][l] ? (rgb_t){rgb.r, rgb.g, rgb.b} : (rgb_t){0, 0, 0};
+                if (led_min <= rgb_index && rgb_index < led_max && HAS_ANY_FLAGS(g_led_config.flags[g_led_config.matrix_co[h][l]], params->flags)) {
                     rgb_matrix_set_color(g_led_config.matrix_co[h][l], index_rgb.r, index_rgb.g, index_rgb.b);
                 }
-                if (HAS_ANY_FLAGS(g_led_config.flags[g_led_config.matrix_co[h][MATRIX_COLS - 1 - l]], params->flags)) {
+                rgb_index = g_led_config.matrix_co[h][MATRIX_COLS - 1 - l];
+                if (led_min <= rgb_index && rgb_index < led_max && HAS_ANY_FLAGS(g_led_config.flags[g_led_config.matrix_co[h][MATRIX_COLS - 1 - l]], params->flags)) {
                     rgb_matrix_set_color(g_led_config.matrix_co[h][MATRIX_COLS - 1 - l], index_rgb.r, index_rgb.g, index_rgb.b);
                 }
                 led[h][l] = led[h][l + 1];
             }
 
             // Light both middle columns
-            RGB index_rgb = led[h][MID_COL - 1] ? (RGB){rgb.r, rgb.g, rgb.b} : (RGB){0, 0, 0};
-            if (HAS_ANY_FLAGS(g_led_config.flags[g_led_config.matrix_co[h][MID_COL - 1]], params->flags)) {
+            rgb_index = g_led_config.matrix_co[h][MID_COL - 1];
+            rgb_t index_rgb = led[h][MID_COL - 1] ? (rgb_t){rgb.r, rgb.g, rgb.b} : (rgb_t){0, 0, 0};
+            if (led_min <= rgb_index && rgb_index < led_max && HAS_ANY_FLAGS(g_led_config.flags[g_led_config.matrix_co[h][MID_COL - 1]], params->flags)) {
                 rgb_matrix_set_color(g_led_config.matrix_co[h][MID_COL - 1], index_rgb.r, index_rgb.g, index_rgb.b);
             }
-            if (HAS_ANY_FLAGS(g_led_config.flags[g_led_config.matrix_co[h][MATRIX_COLS - MID_COL]], params->flags)) {
+            rgb_index = g_led_config.matrix_co[h][MATRIX_COLS - MID_COL];
+            if (led_min <= rgb_index && rgb_index < led_max && HAS_ANY_FLAGS(g_led_config.flags[g_led_config.matrix_co[h][MATRIX_COLS - MID_COL]], params->flags)) {
                 rgb_matrix_set_color(g_led_config.matrix_co[h][MATRIX_COLS - MID_COL], index_rgb.r, index_rgb.g, index_rgb.b);
             }
 
