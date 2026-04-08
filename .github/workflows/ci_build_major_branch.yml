@@ -6,13 +6,13 @@ permissions:
 
 on:
   push:
-    branches: [master, develop]
+    branches: [master, develop, y_and_r_kb_pool]
   workflow_dispatch:
     inputs:
       branch:
         type: choice
         description: "Branch to build"
-        options: [master, develop]
+        options: [master, develop, y_and_r_kb_pool]
 
 env:
   # https://docs.github.com/en/actions/learn-github-actions/usage-limits-billing-and-administration#usage-limits
@@ -27,7 +27,7 @@ concurrency:
 jobs:
   determine_concurrency:
     name: "Determine concurrency"
-    if: github.repository == 'qmk/qmk_firmware'
+    if: github.repository == 'hectorvs/qmk_firmware'
     runs-on: ubuntu-latest
     container: ghcr.io/qmk/qmk_cli
 
